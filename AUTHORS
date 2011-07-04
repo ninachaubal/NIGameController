@@ -3,3 +3,7 @@
   Copying and distribution of this file, with or without modification,
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
+
+Rajarshi Roy wrote the gesturing framework and implemented gesture control for various gametypes
+
+Niraj Chaubal added dynamic class loading and support for configuration files for modularity and extensiblity. 
