@@ -1,0 +1,8 @@
+Gesture,Keys,Sensitivity, Hold/Hit, Description/Comments
+HandStretchForward, control , ,, Nitrous
+SteerLeft, a , 1,
+SteerRight, d, 1,
+LeanForward, w, 1,,accelerate
+LeanBackward, s,,,break/reverse
+HandStretchOutward,escape, 1 ,hold
+SelfKnucklePunch,enter, 1 ,hold

@@ -121,3 +121,23 @@ class SelfKnucklePunch extends Gesture {
   }
 }
 
+class ForearmForward extends Gesture {
+  public ForearmForward(){
+    state = false;
+    description = "Forearm Forward";
+  }
+  boolean eval(){
+     return (calcanglelean(s.rShoulderCoords, s.rHandCoords)<-0.80)&&(s.rHandCoords[1]<s.rHipCoords[1]);
+  }
+}
+
+class ForearmBackward extends Gesture {
+  public ForearmBackward(){
+    state = false;
+    description = "Forearm Backward";
+  }
+  boolean eval(){
+     return (calcanglelean(s.rShoulderCoords, s.rHandCoords)<0.2)&&(calcanglelean(s.rShoulderCoords, s.rHandCoords)>-0.4)&&(s.rHandCoords[1]<s.rHipCoords[1]);
+  }
+}
+

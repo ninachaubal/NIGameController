@@ -4,11 +4,14 @@ class MouseThread extends Thread {
   boolean running;
   boolean enableMove;
   boolean enableMovePrev;
+  boolean lcState, rcState;
   
   int stage = 0;  //variable for which stage in gesture sequence 
   
   float mousePrevX;
   float mousePrevY;
+  
+  float mousedistPrev;
   
   float mousiex, mousiey;
   
@@ -39,9 +42,27 @@ class MouseThread extends Thread {
     
       while(running) {   
       //parallel runtime code starts here
+      float mousedist =calcmousedist();
+      float mousedistChange= mousedist-mousedistPrev;
+      mousiex=mousedistChange;
       
+      if(mousedistChange >0.18)
+      {textMode(SCREEN);
+           textSize(20);
+           text("LEFT CLICK");
+           if(!lcState){lcState=true; ricky.keyPress(KeyEvent.VK_L);}
+         } else {if(lcState){lcState=false; ricky.keyRelease(KeyEvent.VK_L);}} 
+      
+      if(mousedistChange <-.17)
+      {textMode(SCREEN);
+           textSize(20);
+           text("RIGHT CLICK");
+           if(!rcState){rcState=true; ricky.keyPress(KeyEvent.VK_R);}
+         } else {if(rcState){rcState=false; ricky.keyRelease(KeyEvent.VK_R);}} 
+      
+      mousedistPrev=mousedist;
       //mouse movement stuff
-      if (calcmousedist()>1.2) {enableMove=true;} else{enableMove=false; enableMovePrev=false;}
+      if (mousedist>1.2) {enableMove=true;} else{enableMove=false; enableMovePrev=false;}
       if (enableMove){  //enable acts like whether the thread is on or off
       
         //neck is a reference point, shoulderlength scales to body size
@@ -61,14 +82,12 @@ class MouseThread extends Thread {
         
         ricky.mouseMove(MouseInfo.getPointerInfo().getLocation().x+(int)(700*mouseChangeX),MouseInfo.getPointerInfo().getLocation().y+(int)(700*mouseChangeY));
         
-        mousiex=mouseChangeX;
-        mousiey=mouseChangeY;
+        //mousiex=mouseChangeX;
+        //mousiey=mouseChangeY;
         
           mousePrevX=mouseCurrX;
           mousePrevY=mouseCurrY;
-         textMode(SCREEN);
-           textSize(20);
-           text("MOUSE ENABLE");
+         
               
               enableMovePrev=true;
       }

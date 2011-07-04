@@ -1,0 +1,6 @@
+Gesture,Keys,Sensitivity, Hold/Hit, Description/Comments
+Mouse,enabled,1,,Aim/shoot
+HandStretchOutward,escape, 1 ,hold
+SelfKnucklePunch,enter, 1 ,hold
+LeanForward, e, 1, hit, use 
+LeanBackward, space, 1, jump
