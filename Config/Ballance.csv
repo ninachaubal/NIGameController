@@ -1,9 +1,9 @@
 Gesture,Keys,Sensitivity, Hold/Hit, Description/Comments
-LeanForward, w, 1, hold, moving forward
-LeanBackward, s, 1, hold, moving back
-LeanRight, d, 1, hold, moving left
-LeanLeft, a, 1, hold, moving right
-TwistLeft, shift+a, 1 , hit, camera left
-TwistRight, shift+d, 1, hit, camera right
-HandStretchOutward,escape, 1 ,hold
-SelfKnucklePunch,enter, 1 ,hold
+LeanForward, w,1, hold,Roll Forward
+LeanBackward, s,1, hold,Roll Backward
+LeanRight, d,1, hold,Roll Right
+LeanLeft, a,1, hold,Roll Left
+TwistLeft, shift+a,1, hit,Camera Left
+TwistRight, shift+d,1, hit, Camera Right
+HandStretchOutward,escape,1,hold,Escape
+SelfKnucklePunch,enter,1,hold,Enter
