@@ -16,12 +16,21 @@
     along with NIGameController.  If not, see <http://www.gnu.org/licenses/>.
 */
 abstract class Gesture {
-  boolean state;
-  boolean hold;
-  float sensitivity;
-  String description;
-  String keys[];
-  abstract boolean eval();
+  /*This is the parent Gesture class. New gestures can be defined by 
+    creating subclasses of Gesture and overloading the eval() function
+    
+    the hold, sensitivity, description and keys variables are set on the
+    basis of the configuration file supplied by the user.
+    Since the description is optional in the configuration file, it is 
+    recommended to set a default value for description in the subclass
+    constructor.   
+   */
+  boolean state; //keeps track of whether the gesture is active
+  boolean hold;  //should the keys be held in a pressed down state if the gesture is active
+  float sensitivity; // can be used as multiplying factor to affect gestures
+  String description; // description displayed in the application's screen
+  String keys[]; // array of keys to press
+  abstract boolean eval(); //function to determine whether or not the gesture is active
 }
 
 class HandStretchForward extends Gesture {

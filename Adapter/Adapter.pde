@@ -74,6 +74,8 @@ void setup() {
 }
 
 void setupKeyMap(){
+  /* fills HashMap keyMap with the VK_<name> static fields in java.awt.event.KeyEvent
+  */
   keyMap = new HashMap<String, Integer>();
   Field[] fields = KeyEvent.class.getDeclaredFields();
   for (Field field : fields) {
@@ -91,15 +93,18 @@ void setupKeyMap(){
 }
 
 void openFile() {
+  //use JFileChooser to get the configuration file
   JFileChooser fc = new JFileChooser();
-  int ret = fc.showOpenDialog(this);
+  int ret = fc.showOpenDialog(this,"Choose a Configuration");
   if (ret == JFileChooser.APPROVE_OPTION) {
     file = fc.getSelectedFile();
   }
 }
 
 void parseFile(){
+  //fill ArrayList gestures with objects of Gesture subclasses 
   gestures = new ArrayList<Gesture>();
+  
   if(file != null){
   
   try{
@@ -111,10 +116,12 @@ void parseFile(){
           vals[i] = vals[i].trim();
         }
         if(vals[0].equalsIgnoreCase("Gesture")) continue; //skip heading line in csv
+        
+        //check if the user wants to enable mouse control
         if(vals[0].equalsIgnoreCase("mouse") && 
            (vals[1].equalsIgnoreCase("") || vals[1].equalsIgnoreCase("enabled") || vals[1].equalsIgnoreCase("on"))) {
            mouseEnabled = true;
-           try {
+          try {
             mouseSensitivity = Float.parseFloat(vals[2]);
             if (mouseSensitivity < 0.3) mouseSensitivity = 1f;
           }
@@ -123,10 +130,15 @@ void parseFile(){
           } 
           continue;
         }
+        
+        //get all the variables for the gesture object to use
+        
         String keys[] = vals[1].split("\\+");
+        
         for(int i=0;i<keys.length;i++){
           keys[i] = keys[i].trim().toLowerCase();
         }
+        
         float sensitivity = 1f;
         if (vals.length > 2){
           try {
@@ -143,6 +155,9 @@ void parseFile(){
             hold = false;
         }
         try {
+          //find the class by name. All the gesture classes are
+          //inner classes of Adapter (because of the way processing.org
+          //does stuff)
           Class clas = Class.forName("Adapter$"+vals[0]);
           Constructor cons = clas.getConstructor(new Class[] {Adapter.class});
           Gesture g = (Gesture) cons.newInstance(this);
@@ -436,6 +451,8 @@ float calcmovedist(){
 }
 
 void check(){
+
+  //check if any gestures are active 
   for (Gesture g : gestures){
     boolean eval = g.eval();
     if(eval){ 
@@ -451,15 +468,17 @@ void check(){
 }
 
 void handle(Gesture g){
-  
+  //handle the gesture. press keys etc.
   if(!g.state){
   	g.state=true;
+  	//press keys
   	for (int i=0;i<g.keys.length;i++){
             Integer keycode = (Integer)keyMap.get(g.keys[i]);
             if (keycode != null)
               ricky.keyPress(keycode.intValue());
   	}
         if(!g.hold) {
+        //release keys if not hold
           for (int i=g.keys.length-1;i>=0;i--){
              Integer keycode = (Integer)keyMap.get(g.keys[i]); 
              if (keycode != null)
@@ -470,6 +489,7 @@ void handle(Gesture g){
   else {
   	g.state=false; 
         if(g.hold){
+        //release keys
   	  for (int i=g.keys.length-1;i>=0;i--){
              Integer keycode = (Integer)keyMap.get(g.keys[i]);
              if (keycode != null)
